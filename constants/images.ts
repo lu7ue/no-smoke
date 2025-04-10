@@ -1,4 +1,4 @@
-import highlight from "../assets/images/defaultAvatar.png";
+import defaultAvatar from "../../no-smoke/assets/images/defaultAvatar.png";
 
 export const images = {
     defaultAvatar
