@@ -1,50 +1,78 @@
-# Welcome to your Expo app 👋
+# NoSmoke 功能规划
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Home
 
-## Get started
+用于展示用户的戒烟进度和激励信息，强调“即时反馈”和“目标驱动”。
 
-1. Install dependencies
+1. **戒烟时长展示**
+   - 实时以“小时 + 分钟”的形式显示戒烟持续时间
 
-   ```bash
-   npm install
-   ```
+2. **累计省下金额**
+   - 显示戒烟以来节省的总金额
+   - 显示当前目标的完成进度（百分比 + 进度条）
 
-2. Start the app
+3. **当前身体恢复阶段**
+   - 展示目前身体的恢复状态
+   - 示例内容：
+     - “你已戒烟12小时，血液中一氧化碳浓度恢复正常。”
+     - 点击可查看完整的阶段列表： 
+     - | 戒烟时长 | 身体变化 |
+       |----------|----------|
+       | 15 分钟  | 心率和血压开始下降 |
+       | 12 小时  | 血液中一氧化碳浓度恢复正常 |
+       | 24 小时  | 心脏病风险开始下降 |
+       | 48 小时  | 味觉、嗅觉开始改善 |
+       | 3 天     | 尼古丁完全排出体外 |
+       | 2-12 周  | 循环系统改善，肺功能提高 |
+       | 1-9 个月 | 咳嗽、呼吸急促改善；肺纤毛再生、抵御感染增强 |
+       | 1 年     | 冠心病风险比吸烟者低一半 |
+       | 5 年     | 中风风险降至正常水平 |
+       | 10 年    | 肺癌死亡风险降低至非吸烟者一半 |
+       | 15 年    | 心脏病风险恢复至非吸烟者水平 |
 
-   ```bash
-    npx expo start
-   ```
+4. **随机激励语句**
+   - 每次打开 Home 页时随机展示一条激励语句或数据
+   - 示例内容：
+      - “每年有超过 800 万人死于烟草相关疾病。”
+      - “吸烟者患肺癌的风险比非吸烟者高 15~30 倍。”
+      - “戒烟后 1 年，心脏病风险降低一半。”
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Records
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+用于记录每次想抽烟的冲动行为，并进行数据可视化分析。
 
-## Get a fresh project
+1. **冲动记录系统**
+   - 用户点击按钮记录每次想吸烟的时刻
+   - 系统自动记录时间戳
+   - 用户需选择或填写诱因（支持预选项和“其他”自定义）
 
-When you're ready, run:
+2. **冲动数据可视化**
+   - **时间分布图（柱状图）：** 展示一天中哪个时段最容易想抽烟
+   - **诱因分析图（饼图或条形图）：** 展示导致冲动的主要原因占比
+   - **次数趋势图（折线图）：** 按天统计想抽烟次数，展示整体趋势（可横跨多年至少 5 年）
 
-```bash
-npm run reset-project
-```
+---
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Profile
 
-## Learn more
+用于展示和管理用户设置。
+1. **用户信息**
+   - 头像
+   - 昵称
+2. **数据设置**
+   - 设置戒烟起始时间
+   - 设置每日吸烟数量、每根烟价格、货币单位
+   - 设置戒烟目标（可修改），选择完成时是否提醒
+   
+---
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+> 未来计划：
+> - 所有数据可导出
+> - 暗色模式切换
+> - 增加更多成就徽章和奖励机制
+> - 自定义应用图标
+> - 设置本地密码锁定 App
+> - 支持云端同步和多设备数据共享
+> - 添加好友互助与排行榜系统
