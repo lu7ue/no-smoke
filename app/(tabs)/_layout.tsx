@@ -42,8 +42,8 @@ const _Layout = () => {
             <Tabs.Screen
             name="index"
             options={{
-                title: 'Home',
-                headerShown: false,
+                title: "No Smoke", // home
+                headerShown: true,
                 tabBarIcon: ({ focused }) => (
                     <TabIcon
                     focused={focused}
@@ -55,8 +55,8 @@ const _Layout = () => {
             <Tabs.Screen
                 name="records"
                 options={{
-                    title: 'Records',
-                    headerShown: false,
+                    title: "No Smoke", // Records
+                    headerShown: true,
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
                             focused={focused}
@@ -68,8 +68,8 @@ const _Layout = () => {
             <Tabs.Screen
                 name="profile"
                 options={{
-                    title: 'Profile',
-                    headerShown: false,
+                    title: "No Smoke", // Profile
+                    headerShown: true,
                     tabBarIcon: ({ focused }) => (
                         <TabIcon
                             focused={focused}
