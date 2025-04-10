@@ -1,5 +1,5 @@
-import highlight from "../../no-smoke/assets/images/highlight.png";
+import highlight from "../assets/images/defaultAvatar.png";
 
 export const images = {
-    highlight
+    defaultAvatar
 };
