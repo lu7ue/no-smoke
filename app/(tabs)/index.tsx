@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import quote from '../../assets/quote.json';
+import { getDatabase } from '../../database/initDB.js';
 
 export default function Index() {
     const [randomQuote, setRandomQuote] = useState('');
 
     // 使用 useEffect 确保每次加载页面时都会生成新的随机句子
     useEffect(() => {
+        const initApp = async () => {
+            try {
+                const db = await getDatabase();
+            } catch (error) {
+                console.error('Database initialization failed:', error);
+            }
+        };
+        
+        initApp();
         // 随机生成索引
         const randomIndex = Math.floor(Math.random() * quote.length);
         // 设置随机句子
