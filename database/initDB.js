@@ -52,6 +52,16 @@ const initializeDatabase = async (db) => {
     console.log('Database initialized successfully');
 };
 
+// 更新用户名
+export const updateUserName = async (newName) => {
+    const db = await getDatabase();
+    await db.runAsync(
+        'UPDATE users SET name = ? WHERE id = ?',
+        [newName, 0] // 假设用户ID为0
+    );
+    return true;
+};
+
 // 保存戒烟日期
 export const saveQuitDate = async (date) => {
     const db = await getDatabase();

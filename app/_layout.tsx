@@ -16,6 +16,14 @@ export default function RootLayout() {
               headerBackVisible: true
             }}
         />
+          <Stack.Screen
+              name="(modals)/settings/edit"
+              options={{
+                  title: '编辑用户信息',
+                  headerBackTitle: '返回',
+                  headerBackVisible: true
+              }}
+          />
       </Stack>
   );
 }

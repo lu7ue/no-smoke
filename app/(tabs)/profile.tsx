@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useFocusEffect } from 'expo-router';
 import { getDatabase } from '../../database/initDB.js';
 import {
     View,
@@ -20,15 +21,14 @@ const Profile = () => {
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
 
-    useEffect(() => {
+    useFocusEffect(() => {
         const loadUser = async () => {
-        const db = await getDatabase();
-        const user = await db.getFirstAsync('SELECT * FROM users LIMIT 1');
-        setUser(user);
+            const db = await getDatabase();
+            const user = await db.getFirstAsync('SELECT * FROM users LIMIT 1');
+            setUser(user);
         };
-        
         loadUser();
-    }, []);
+    });
 
     return (
     <ScrollView className="flex-1 bg-white">
@@ -36,11 +36,13 @@ const Profile = () => {
         <View className="relative bg-white px-0 py-6">
             {/* Edit Icon */}
             <View className="absolute bottom-6 right-10">
-                <Image
-                    source={icons.edit}
-                    className="w-6 h-6"
-                    style={{ tintColor: '#6b7280' }}
-                />
+                <TouchableOpacity onPress={() => router.push('/(modals)/settings/edit')}>
+                    <Image
+                        source={icons.edit}
+                        className="w-6 h-6"
+                        style={{ tintColor: '#6b7280' }}
+                    />
+                </TouchableOpacity>
             </View>
 
             <View className="items-center justify-center">
