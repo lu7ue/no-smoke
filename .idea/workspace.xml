@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02f5edf6-66f6-4db6-be9b-877d99c45216" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/icons/edit.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/defaultAvatar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/imagePicker.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(modals)/settings/edit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(modals)/settings/edit.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/images/highlight.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants/icons.ts" beforeDir="false" afterPath="$PROJECT_DIR$/constants/icons.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants/images.ts" beforeDir="false" afterPath="$PROJECT_DIR$/constants/images.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/initDB.js" beforeDir="false" afterPath="$PROJECT_DIR$/database/initDB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +34,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/expo-sqlite",
+    "git-widget-placeholder": "feature/date-input",
     "last_opened_file_path": "/Users/luyue/Documents/side-projects/no-smoke",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -48,9 +48,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/(modals)" />
+      <recent name="$PROJECT_DIR$/app/settings" />
+      <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/assets/icons" />
-      <recent name="$PROJECT_DIR$/app/(tabs)" />
     </key>
   </component>
   <component name="SharedIndexes">
