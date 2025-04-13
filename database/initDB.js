@@ -44,7 +44,7 @@ const initializeDatabase = async (db) => {
         await db.runAsync(
             `INSERT INTO users (id, name, avatar) 
             VALUES (?, ?, ?)`,
-            [0, 'username', 'default'],
+            [0, 'username', ''],
         );
         console.log('Initial user created');
     }

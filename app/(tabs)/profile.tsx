@@ -14,56 +14,58 @@ import { useRouter } from 'expo-router';
 type User = {
     id: number;
     name?: string;
-    // avatar?: string;
+    avatar?: string;
 };
 
 const Profile = () => {
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
 
+    // 加载用户数据
+    const loadUser = async () => {
+        const db = await getDatabase();
+        const user = await db.getFirstAsync('SELECT * FROM users LIMIT 1');
+        setUser(user);
+    };
+
+    // 使用 useFocusEffect 确保每次页面获得焦点时刷新数据
     useFocusEffect(() => {
-        const loadUser = async () => {
-            const db = await getDatabase();
-            const user = await db.getFirstAsync('SELECT * FROM users LIMIT 1');
-            setUser(user);
-        };
         loadUser();
     });
 
     return (
-    <ScrollView className="flex-1 bg-white">
-        {/* 用户信息卡片 */}
-        <View className="relative bg-white px-0 py-6">
-            {/* Edit Icon */}
-            <View className="absolute bottom-6 right-10">
-                <TouchableOpacity onPress={() => router.push('/(modals)/settings/edit')}>
+        <ScrollView className="flex-1 bg-white">
+            {/* 用户信息卡片 */}
+            <View className="relative bg-white px-0 py-6">
+                {/* 编辑按钮 */}
+                <View className="absolute bottom-6 right-10">
+                    <TouchableOpacity onPress={() => router.push('/(modals)/settings/edit')}>
+                        <Image
+                            source={icons.edit}
+                            className="w-6 h-6"
+                            style={{ tintColor: '#6b7280' }}
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                <View className="items-center justify-center">
+                    {/* 头像 - 显示用户上传的头像或默认头像 */}
                     <Image
-                        source={icons.edit}
-                        className="w-6 h-6"
-                        style={{ tintColor: '#6b7280' }}
+                        source={
+                            user?.avatar && user.avatar !== ''
+                                ? { uri: user.avatar }
+                                : require('../../assets/images/defaultAvatar.png')
+                        }
+                        className="w-24 h-24 rounded-full mb-2"
+                        defaultSource={require('../../assets/images/defaultAvatar.png')} // 添加默认源
                     />
-                </TouchableOpacity>
+
+                    {/* 用户名 */}
+                    <Text className="text-2xl text-gray-800">
+                        {user?.name || 'Unknown'}
+                    </Text>
+                </View>
             </View>
-
-            <View className="items-center justify-center">
-                {/* 头像 */}
-                {/*暂时只使用这一张默认图片 使用require()直接读取 不经过数据库*/}
-                <Image
-                    source={require('../../assets/images/defaultAvatar.png')}
-                    className="w-24 h-24 rounded-full mb-2"
-                />
-
-                {/* 用户ID */}
-                {/*<Text className="text-2xl text-gray-800">*/}
-                {/*    {user?.id}*/}
-                {/*</Text>*/}
-
-                {/* 用户名 */}
-                <Text className="text-2xl text-gray-800">
-                    {user?.name || 'Unknown'}
-                </Text>
-            </View>
-        </View>
 
         {/* 分割线 */}
         <View className="bg-white">
