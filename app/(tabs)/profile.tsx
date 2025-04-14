@@ -109,6 +109,37 @@ const Profile = () => {
                 }}
             />
         </View>
+
+            {/* 设置金额 */}
+            <TouchableOpacity
+                onPress={() => router.push('/(modals)/settings/money')}
+                className="flex-row justify-between items-center bg-white p-2 mb-4 ml-4 mr-4"
+            >
+                <Text
+                    className="text-gray-700 text-2xl"
+                    style={{
+                        color: '#4B5563',
+                        textAlign: 'left',
+                        lineHeight: 22,
+                    }}
+                >
+                    设置目标
+                </Text>
+
+                <Text className="text-2xl text-gray-400 mr-4">{'>'}</Text>
+            </TouchableOpacity>
+
+            {/* 分割线 */}
+            <View className="bg-white">
+                <View
+                    style={{
+                        height: 1.5,
+                        backgroundColor: '#d1d5db',
+                        marginHorizontal: 20,
+                        marginBottom: 20,
+                    }}
+                />
+            </View>
     </ScrollView>
     )
 }
