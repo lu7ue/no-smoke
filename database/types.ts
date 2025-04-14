@@ -14,3 +14,10 @@ export interface Goal {
     target_amount: number;        // 目标金额
     created_at: string;           // 创建时间戳
 }
+
+// 定义健康状态的接口
+export interface HealthStatus {
+    duration_minutes: number;
+    title: string;
+    description: string;
+}
