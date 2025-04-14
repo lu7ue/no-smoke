@@ -84,8 +84,8 @@ const Money = () => {
         try {
             // 保存吸烟习惯
             const habitsToSave = {
-                pricePerCigarette: parseFloat(habits.pricePerCigarette),
-                cigarettesPerDay: parseInt(habits.cigarettesPerDay),
+                price_per_cigarette: parseFloat(habits.pricePerCigarette),
+                cigarettes_per_day: parseInt(habits.cigarettesPerDay),
                 currency: habits.currency
             };
 
@@ -93,9 +93,14 @@ const Money = () => {
 
             // 保存或清除目标
             if (hasGoal) {
+                const targetAmount = parseFloat(goal.targetAmount);
+                if (isNaN(targetAmount) || targetAmount <= 0) {
+                    throw new Error('目标金额必须是大于0的数字');
+                }
+
                 await saveGoal({
                     name: goal.name,
-                    targetAmount: parseFloat(goal.targetAmount)
+                    target_amount: targetAmount
                 });
             } else {
                 // 清除目标
@@ -106,7 +111,7 @@ const Money = () => {
             router.back();
         } catch (error) {
             console.error('保存失败:', error);
-            Alert.alert('错误', '保存失败，请重试');
+            Alert.alert('保存失败，请重试');
         } finally {
             setLoading(false);
         }

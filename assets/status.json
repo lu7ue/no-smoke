@@ -1,0 +1,67 @@
+[
+  {
+    "duration_minutes": 15,
+    "title": "你已戒烟超过15分钟",
+    "description": "你的心率和血压已经开始下降到正常水平。"
+  },
+  {
+    "duration_minutes": 720,
+    "title": "你已戒烟超过12小时",
+    "description": "血液中的一氧化碳水平已经降至正常范围。"
+  },
+  {
+    "duration_minutes": 1440,
+    "title": "你已戒烟超过1天",
+    "description": "你患心脏病的风险已经开始降低。"
+  },
+  {
+    "duration_minutes": 2880,
+    "title": "你已戒烟超过2天",
+    "description": "你的味觉和嗅觉开始恢复正常。"
+  },
+  {
+    "duration_minutes": 4320,
+    "title": "你已戒烟超过3天",
+    "description": "体内的尼古丁已经完全代谢排出。"
+  },
+  {
+    "duration_minutes": 20160,
+    "title": "你已戒烟超过14天",
+    "description": "你的血液循环开始明显改善。"
+  },
+  {
+    "duration_minutes": 120960,
+    "title": "你已戒烟超过3个月",
+    "description": "你的肺功能提高了30%以上。"
+  },
+  {
+    "duration_minutes": 43200,
+    "title": "你已戒烟超过30天",
+    "description": "咳嗽和呼吸急促症状明显减轻。"
+  },
+  {
+    "duration_minutes": 388800,
+    "title": "你已戒烟超过9个月",
+    "description": "肺纤毛再生，抵御感染能力增强。"
+  },
+  {
+    "duration_minutes": 525600,
+    "title": "你已戒烟超过1年",
+    "description": "患冠心病的风险比吸烟者低一半。"
+  },
+  {
+    "duration_minutes": 2628000,
+    "title": "你已戒烟超过2年",
+    "description": "中风风险降至正常水平。"
+  },
+  {
+    "duration_minutes": 5256000,
+    "title": "你已戒烟超过5年",
+    "description": "肺癌死亡风险降低至非吸烟者一半。"
+  },
+  {
+    "duration_minutes": 7884000,
+    "title": "你已戒烟超过10年",
+    "description": "心脏病风险恢复至非吸烟者水平。"
+  }
+]

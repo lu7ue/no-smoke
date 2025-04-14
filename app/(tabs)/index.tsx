@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import quote from '../../assets/quote.json';
+import status from '../../assets/status.json';
 import { getDatabase, getQuitDate, getSmokingHabits, getGoal } from '../../database/initDB';
 import { useRouter, useFocusEffect } from 'expo-router';
-import { SmokingHabits, Goal } from '../../database/types';
+import { SmokingHabits, Goal, HealthStatus } from '../../database/types';
 
 export default function Index() {
     const router = useRouter();
@@ -13,6 +14,7 @@ export default function Index() {
     const [savedAmount, setSavedAmount] = useState(0);
     const [habits, setHabits] = useState<SmokingHabits | null>(null);
     const [goal, setGoal] = useState<Goal | null>(null);
+    const [currentHealthStatus, setCurrentHealthStatus] = useState<HealthStatus | null>(null);
 
     const loadMoneyData = async () => {
         try {
@@ -54,16 +56,44 @@ export default function Index() {
     const loadQuitData = async () => {
         try {
             const date = await getQuitDate();
-            // 数据库初始化确保date永远不会为null
+            // 数据库确保date永远不会为null
             setQuitDate(date as Date);
             calculateDuration(date as Date);
+            calculateHealthStatus(date as Date); // 新增：计算健康状态
         } catch (error) {
             console.error('加载戒烟日期失败:', error);
-            // 即使出错也使用当前时间
             const currentDate = new Date();
             setQuitDate(currentDate);
             calculateDuration(currentDate);
+            calculateHealthStatus(currentDate); // 新增：计算健康状态
         }
+    };
+
+    // 计算当前健康状态的函数
+    const calculateHealthStatus = (quitDate: Date) => {
+        const now = new Date();
+        const minutesDiff = Math.floor((now.getTime() - quitDate.getTime()) / (1000 * 60));
+
+        // 导入状态数据
+        const statusData: HealthStatus[] = status as HealthStatus[];
+
+        // 找到当前应该显示的状态
+        let currentStatus: HealthStatus | null = null;
+
+        // 从高到低检查，找到第一个不超过当前时间的状态
+        for (let i = statusData.length - 1; i >= 0; i--) {
+            if (minutesDiff >= statusData[i].duration_minutes) {
+                currentStatus = statusData[i];
+                break;
+            }
+        }
+
+        // 如果没有找到（时间小于15分钟），则显示第一个状态
+        if (!currentStatus && statusData.length > 0) {
+            currentStatus = statusData[0];
+        }
+
+        setCurrentHealthStatus(currentStatus);
     };
 
     // 使用 useFocusEffect 加载戒烟和金钱数据
@@ -265,13 +295,52 @@ export default function Index() {
             </View>
 
             {/* 分割线 */}
-            <View className="bg-white">
+            <View className='bg-white'>
                 <View style={{
                     height: 1.5,
                     backgroundColor: '#d1d5db',
                     marginHorizontal: 20,
                     marginBottom: 20
                 }} />
+            </View>
+
+            {/* 身体状态 */}
+            <View style={{
+                flex: 1,
+                backgroundColor: 'white',
+                paddingHorizontal: 0,
+                paddingVertical: 0
+            }}>
+                <Text className="text-gray-900 font-bold text-2xl" style={{
+                    marginTop: 20,
+                    paddingLeft: 10,
+                }}>
+                    身体状态
+                </Text>
+
+                <View style={{
+                    marginTop: 6,
+                    marginBottom: 20,
+                    backgroundColor: 'white',
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    marginHorizontal: 10,
+                }}>
+                    {currentHealthStatus ? (
+                        <>
+                            <Text className="text-gray-700 text-lg" style={{ textAlign: 'left', marginBottom: 8 }}>
+                                {currentHealthStatus.title}
+                            </Text>
+                            <Text className="text-gray-600 text-base" style={{ textAlign: 'left' }}>
+                                {currentHealthStatus.description}
+                            </Text>
+                        </>
+                    ) : (
+                        <Text className="text-gray-700 text-lg" style={{ textAlign: 'left' }}>
+                            正在获取健康状态...
+                        </Text>
+                    )}
+                </View>
             </View>
         </ScrollView>
     );

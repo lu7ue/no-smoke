@@ -138,12 +138,23 @@ export const getSmokingHabits = async () => {
 
 export const saveGoal = async (goal) => {
     const db = await getDatabase();
-    await db.runAsync('DELETE FROM goals;');
-    await db.runAsync(
-        'INSERT INTO goals (name, target_amount) VALUES (?, ?)',
-        [goal.name, goal.target_amount]
-    );
-    return true;
+    try {
+        await db.runAsync('DELETE FROM goals;');
+
+        // 验证目标数据
+        if (!goal.name || goal.target_amount == null || isNaN(goal.target_amount)) {
+            throw new Error('无效的目标数据');
+        }
+
+        await db.runAsync(
+            'INSERT INTO goals (name, target_amount) VALUES (?, ?)',
+            [goal.name, goal.target_amount]
+        );
+        return true;
+    } catch (error) {
+        console.error('保存目标失败:', error);
+        throw error; // 重新抛出错误以便上层处理
+    }
 };
 
 export const getGoal = async () => {
