@@ -54,12 +54,15 @@ export default function Index() {
     const loadQuitData = async () => {
         try {
             const date = await getQuitDate();
-            if (date) {
-                setQuitDate(date);
-                calculateDuration(date);
-            }
+            // 数据库初始化确保date永远不会为null
+            setQuitDate(date as Date);
+            calculateDuration(date as Date);
         } catch (error) {
             console.error('加载戒烟日期失败:', error);
+            // 即使出错也使用当前时间
+            const currentDate = new Date();
+            setQuitDate(currentDate);
+            calculateDuration(currentDate);
         }
     };
 

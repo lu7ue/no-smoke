@@ -14,10 +14,9 @@ const DatePage = () => {
     useEffect(() => {
         const loadQuitDate = async () => {
             const savedDate = await getQuitDate();
-            if (savedDate) {
-                setDate(savedDate);
-                calculateDuration(savedDate);
-            }
+            // 数据库确保savedDate不为null
+            setDate(savedDate as Date);
+            calculateDuration(savedDate as Date);
         };
         loadQuitDate();
     }, []);
