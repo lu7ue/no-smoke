@@ -15,6 +15,7 @@ export default function Index() {
     const [habits, setHabits] = useState<SmokingHabits | null>(null);
     const [goal, setGoal] = useState<Goal | null>(null);
     const [currentHealthStatus, setCurrentHealthStatus] = useState<HealthStatus | null>(null);
+    const [showHealthStatus, setShowHealthStatus] = useState(false);
 
     const loadMoneyData = async () => {
         try {
@@ -77,6 +78,14 @@ export default function Index() {
         // 导入状态数据
         const statusData: HealthStatus[] = status as HealthStatus[];
 
+        // 如果时间少于15分钟，不显示状态
+        if (minutesDiff < 15) {
+            setShowHealthStatus(false);
+            return;
+        }
+
+        setShowHealthStatus(true);
+
         // 找到当前应该显示的状态
         let currentStatus: HealthStatus | null = null;
 
@@ -86,11 +95,6 @@ export default function Index() {
                 currentStatus = statusData[i];
                 break;
             }
-        }
-
-        // 如果没有找到（时间小于15分钟），则显示第一个状态
-        if (!currentStatus && statusData.length > 0) {
-            currentStatus = statusData[0];
         }
 
         setCurrentHealthStatus(currentStatus);
@@ -186,7 +190,7 @@ export default function Index() {
                         onPress={() => router.push('/(modals)/settings/date')}
                         style={{ marginRight: 10, marginTop: 20 }}
                     >
-                        <Text className="text-blue-500 text-sm">设置</Text>
+                        <Text className="text-2xl text-gray-400 mr-4">{'>'}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -247,7 +251,7 @@ export default function Index() {
                         onPress={() => router.push('/(modals)/settings/money')}
                         style={{ marginRight: 10, marginTop: 20 }}
                     >
-                        <Text className="text-blue-500 text-sm">设置</Text>
+                        <Text className="text-2xl text-gray-400 mr-4">{'>'}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -259,12 +263,12 @@ export default function Index() {
                     paddingVertical: 10,
                     marginHorizontal: 10,
                 }}>
-                    {habits && (
+                    {habits ? (
                         <>
                             <Text className="text-gray-700 text-lg" style={{ textAlign: 'left', marginBottom: 8 }}>
                                 已节省: {savedAmount.toFixed(2)} {habits.currency}
                             </Text>
-                            {goal && (
+                            {goal ? (
                                 <>
                                     <Text className="text-gray-700 text-lg mb-2">
                                         目标: {goal.name}
@@ -288,8 +292,16 @@ export default function Index() {
                                         </Text>
                                     </View>
                                 </>
+                            ) : (
+                                <Text className="text-gray-700 text-lg" style={{ textAlign: 'left' }}>
+                                    设置目标以显示数据
+                                </Text>
                             )}
                         </>
+                    ) : (
+                        <Text className="text-gray-700 text-lg" style={{ textAlign: 'left' }}>
+                            设置目标以显示数据
+                        </Text>
                     )}
                 </View>
             </View>
@@ -311,12 +323,24 @@ export default function Index() {
                 paddingHorizontal: 0,
                 paddingVertical: 0
             }}>
-                <Text className="text-gray-900 font-bold text-2xl" style={{
-                    marginTop: 20,
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                     paddingLeft: 10,
                 }}>
-                    身体状态
-                </Text>
+                    <Text className="text-gray-900 font-bold text-2xl" style={{
+                        marginTop: 20,
+                    }}>
+                        身体状态
+                    </Text>
+                    <TouchableOpacity
+                        onPress={() => router.push('/(modals)/settings/info')}
+                        style={{ marginRight: 10, marginTop: 20, flexDirection: 'row', alignItems: 'center' }}
+                    >
+                        <Text className="text-2xl text-gray-400 mr-4">{'>'}</Text>
+                    </TouchableOpacity>
+                </View>
 
                 <View style={{
                     marginTop: 6,
@@ -326,18 +350,24 @@ export default function Index() {
                     paddingVertical: 10,
                     marginHorizontal: 10,
                 }}>
-                    {currentHealthStatus ? (
-                        <>
-                            <Text className="text-gray-700 text-lg" style={{ textAlign: 'left', marginBottom: 8 }}>
-                                {currentHealthStatus.title}
+                    {showHealthStatus ? (
+                        currentHealthStatus ? (
+                            <>
+                                <Text className="text-gray-700 text-lg" style={{ textAlign: 'left', marginBottom: 8 }}>
+                                    {currentHealthStatus.title}
+                                </Text>
+                                <Text className="text-gray-600 text-base" style={{ textAlign: 'left' }}>
+                                    {currentHealthStatus.description}
+                                </Text>
+                            </>
+                        ) : (
+                            <Text className="text-gray-700 text-lg" style={{ textAlign: 'left' }}>
+                                正在获取健康状态...
                             </Text>
-                            <Text className="text-gray-600 text-base" style={{ textAlign: 'left' }}>
-                                {currentHealthStatus.description}
-                            </Text>
-                        </>
+                        )
                     ) : (
                         <Text className="text-gray-700 text-lg" style={{ textAlign: 'left' }}>
-                            正在获取健康状态...
+                            暂无数据，请15分钟后再次查看
                         </Text>
                     )}
                 </View>

@@ -32,6 +32,14 @@ export default function RootLayout() {
                   headerBackVisible: true
               }}
           />
+          <Stack.Screen
+              name="(modals)/settings/info"
+              options={{
+                  title: '健康状态总览',
+                  headerBackTitle: '返回',
+                  headerBackVisible: true
+              }}
+          />
       </Stack>
   );
 }
