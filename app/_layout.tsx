@@ -24,6 +24,14 @@ export default function RootLayout() {
                   headerBackVisible: true
               }}
           />
+          <Stack.Screen
+              name="(modals)/settings/money"
+              options={{
+                  title: '设置目标',
+                  headerBackTitle: '返回',
+                  headerBackVisible: true
+              }}
+          />
       </Stack>
   );
 }

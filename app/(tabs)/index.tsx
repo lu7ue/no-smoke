@@ -1,14 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import quote from '../../assets/quote.json';
-import { getDatabase, getQuitDate } from '../../database/initDB';
+import { getDatabase, getQuitDate, getSmokingHabits, getGoal } from '../../database/initDB';
 import { useRouter, useFocusEffect } from 'expo-router';
+import { SmokingHabits, Goal } from '../../database/types';
 
 export default function Index() {
     const router = useRouter();
     const [randomQuote, setRandomQuote] = useState('');
     const [quitDuration, setQuitDuration] = useState('');
     const [quitDate, setQuitDate] = useState<Date | null>(null);
+    const [savedAmount, setSavedAmount] = useState(0);
+    const [habits, setHabits] = useState<SmokingHabits | null>(null);
+    const [goal, setGoal] = useState<Goal | null>(null);
+
+    const loadMoneyData = async () => {
+        try {
+            const date = await getQuitDate();
+            if (!date) return;
+
+            const habits = await getSmokingHabits();
+            const goal = await getGoal();
+
+            if (habits) {
+                setHabits(habits);
+                const now = new Date();
+                const days = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+                const amount = days * habits.cigarettes_per_day * habits.price_per_cigarette;
+                setSavedAmount(amount);
+            }
+
+            if (goal && goal.name) {
+                setGoal(goal);
+            }
+        } catch (error) {
+            console.error('加载省钱数据失败:', error);
+        }
+    };
 
     // 计算戒烟时长
     const calculateDuration = (quitDate: Date) => {
@@ -35,20 +63,29 @@ export default function Index() {
         }
     };
 
-    // 使用 useFocusEffect 加载戒烟数据
-    useFocusEffect(() => {
-        loadQuitData();
-    });
+    // 使用 useFocusEffect 加载戒烟和金钱数据
+    useFocusEffect(
+        React.useCallback(() => {
+            loadQuitData();
+            loadMoneyData();
+        }, [])
+    );
 
     // 使用 useEffect 初始化应用
     useEffect(() => {
         const initApp = async () => {
-            await getDatabase(); // 初始化数据库
-            await loadQuitData(); // 加载戒烟数据
+            try {
+                await getDatabase(); // 初始化数据库
+                await loadQuitData(); // 加载戒烟数据
 
-            // 设置随机激励语句
-            const randomIndex = Math.floor(Math.random() * quote.length);
-            setRandomQuote(quote[randomIndex]);
+                // 设置随机激励语句
+                if (quote && quote.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * quote.length);
+                    setRandomQuote(quote[randomIndex]);
+                }
+            } catch (error) {
+                console.error('初始化失败:', error);
+            }
         };
 
         initApp();
@@ -141,6 +178,85 @@ export default function Index() {
                         <Text className="text-gray-700 text-lg" style={{ textAlign: 'left' }}>
                             您还未设置戒烟时间
                         </Text>
+                    )}
+                </View>
+            </View>
+
+            {/* 分割线 */}
+            <View className="bg-white">
+                <View style={{
+                    height: 1.5,
+                    backgroundColor: '#d1d5db',
+                    marginHorizontal: 20,
+                    marginBottom: 20
+                }} />
+            </View>
+
+            {/* 省钱进度 */}
+            <View style={{
+                flex: 1,
+                backgroundColor: 'white',
+                paddingHorizontal: 0,
+                paddingVertical: 0
+            }}>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingLeft: 10,
+                }}>
+                    <Text className="text-gray-900 font-bold text-2xl" style={{
+                        marginTop: 20,
+                    }}>
+                        省钱进度
+                    </Text>
+                    <TouchableOpacity
+                        onPress={() => router.push('/(modals)/settings/money')}
+                        style={{ marginRight: 10, marginTop: 20 }}
+                    >
+                        <Text className="text-blue-500 text-sm">设置</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{
+                    marginTop: 6,
+                    marginBottom: 20,
+                    backgroundColor: 'white',
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    marginHorizontal: 10,
+                }}>
+                    {habits && (
+                        <>
+                            <Text className="text-gray-700 text-lg" style={{ textAlign: 'left', marginBottom: 8 }}>
+                                已节省: {savedAmount.toFixed(2)} {habits.currency}
+                            </Text>
+                            {goal && (
+                                <>
+                                    <Text className="text-gray-700 text-lg mb-2">
+                                        目标: {goal.name}
+                                    </Text>
+
+                                    <View className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                                        <View
+                                            className="bg-green-600 h-2.5 rounded-full"
+                                            style={{ width: `${Math.min(100, (savedAmount / goal.target_amount) * 100)}%` }}
+                                        ></View>
+                                    </View>
+
+                                    <View className="flex-row justify-between items-center mb-4">
+                                        <Text className="text-gray-700 text-lg">
+                                            {savedAmount >= goal.target_amount
+                                                ? '已完成'
+                                                : `${savedAmount.toFixed(2)} / ${goal.target_amount} ${habits.currency}`}
+                                        </Text>
+                                        <Text className="text-gray-700 text-lg">
+                                            {Math.min(100, (savedAmount / goal.target_amount) * 100).toFixed(0)}%
+                                        </Text>
+                                    </View>
+                                </>
+                            )}
+                        </>
                     )}
                 </View>
             </View>
