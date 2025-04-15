@@ -21,3 +21,12 @@ export interface HealthStatus {
     title: string;
     description: string;
 }
+
+// 定义冲动记录的接口
+export interface CravingRecord {
+    id: number;
+    timestamp: string;
+    trigger: string;
+    is_custom_trigger: boolean;
+    created_at: string;
+}

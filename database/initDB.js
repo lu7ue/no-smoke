@@ -15,6 +15,7 @@ const initializeDatabase = async (db) => {
         await db.execAsync(`PRAGMA journal_mode = WAL;`);
 
         // 删除旧表（仅限开发阶段使用）
+        await db.execAsync(`DROP TABLE IF EXISTS craving_records;`);
         await db.execAsync(`DROP TABLE IF EXISTS quit_dates;`);
         await db.execAsync(`DROP TABLE IF EXISTS smoking_habits;`);
         await db.execAsync(`DROP TABLE IF EXISTS goals;`);
@@ -59,6 +60,17 @@ const initializeDatabase = async (db) => {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `);
+
+        // 创建冲动记录表
+        await db.execAsync(`
+  CREATE TABLE IF NOT EXISTS craving_records (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp TEXT NOT NULL,
+    trigger TEXT NOT NULL,
+    is_custom_trigger BOOLEAN DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
+`);
 
         // 检查并插入默认用户
         const existingUsers = await db.getAllAsync('SELECT * FROM users');
@@ -166,4 +178,65 @@ export const getGoal = async () => {
         target_amount: result.target_amount,
         created_at: result.created_at
     } : null;
+};
+
+export const addCravingRecord = async (record) => {
+    const db = await getDatabase();
+    await db.runAsync(
+        'INSERT INTO craving_records (timestamp, trigger, is_custom_trigger) VALUES (?, ?, ?)',
+        [new Date().toISOString(), record.trigger, record.is_custom_trigger ? 1 : 0]
+    );
+    return true;
+};
+
+export const getCravingRecords = async (startDate, endDate) => {
+    const db = await getDatabase();
+    let query = 'SELECT * FROM craving_records';
+    const params = [];
+
+    if (startDate && endDate) {
+        query += ' WHERE timestamp BETWEEN ? AND ?';
+        params.push(startDate.toISOString(), endDate.toISOString());
+    }
+
+    query += ' ORDER BY timestamp DESC';
+
+    return await db.getAllAsync(query, params);
+};
+
+// 添加冲动记录
+export const getTriggerStats = async () => {
+    const db = await getDatabase();
+    return await db.getAllAsync(
+        'SELECT trigger, COUNT(*) as count FROM craving_records GROUP BY trigger ORDER BY count DESC'
+    );
+};
+
+// 获取冲动记录
+export const getTimeDistribution = async () => {
+    const db = await getDatabase();
+    return await db.getAllAsync(
+        `SELECT
+             strftime('%H', datetime(timestamp, 'localtime')) AS hour, 
+            COUNT(*) AS count
+         FROM craving_records
+         GROUP BY hour
+         ORDER BY hour`
+    );
+};
+
+// 获取每日趋势数据
+export const getDailyTrends = async (days) => {
+    const db = await getDatabase();
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - (days || 30));
+
+    return await db.getAllAsync(
+        `SELECT date(timestamp) as date, COUNT(*) as count 
+     FROM craving_records 
+     WHERE timestamp >= ?
+     GROUP BY date
+     ORDER BY date`,
+        [cutoffDate.toISOString()]
+    );
 };
