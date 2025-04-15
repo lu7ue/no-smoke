@@ -40,6 +40,22 @@ export default function RootLayout() {
                   headerBackVisible: true
               }}
           />
+          <Stack.Screen
+              name="(modals)/settings/export"
+              options={{
+                  title: '导出',
+                  headerBackTitle: '返回',
+                  headerBackVisible: true
+              }}
+          />
+          <Stack.Screen
+              name="(modals)/settings/import"
+              options={{
+                  title: '导入',
+                  headerBackTitle: '返回',
+                  headerBackVisible: true
+              }}
+          />
       </Stack>
   );
 }
