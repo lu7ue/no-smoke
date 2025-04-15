@@ -184,13 +184,13 @@ export default function Index() {
                     <Text className="text-gray-900 font-bold text-2xl" style={{
                         marginTop: 20,
                     }}>
-                        戒烟进度
+                        戒烟时间
                     </Text>
                     <TouchableOpacity
                         onPress={() => router.push('/(modals)/settings/date')}
                         style={{ marginRight: 10, marginTop: 20 }}
                     >
-                        <Text className="text-2xl text-gray-400 mr-4">{'>'}</Text>
+                        {/*<Text className="text-2xl text-gray-400 mr-4">{'>'}</Text>*/}
                     </TouchableOpacity>
                 </View>
 
@@ -229,7 +229,7 @@ export default function Index() {
                 }} />
             </View>
 
-            {/* 省钱进度 */}
+            {/* 目标进度 */}
             <View style={{
                 flex: 1,
                 backgroundColor: 'white',
@@ -245,13 +245,13 @@ export default function Index() {
                     <Text className="text-gray-900 font-bold text-2xl" style={{
                         marginTop: 20,
                     }}>
-                        省钱进度
+                        目标
                     </Text>
                     <TouchableOpacity
                         onPress={() => router.push('/(modals)/settings/money')}
                         style={{ marginRight: 10, marginTop: 20 }}
                     >
-                        <Text className="text-2xl text-gray-400 mr-4">{'>'}</Text>
+                        {/*<Text className="text-2xl text-gray-400 mr-4">{'>'}</Text>*/}
                     </TouchableOpacity>
                 </View>
 
