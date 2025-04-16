@@ -193,8 +193,6 @@ export default function ImportScreen() {
 
     return (
         <View className="p-4">
-            <Text className="text-lg font-bold mb-4">从JSON文件恢复数据</Text>
-
             <TouchableOpacity
                 onPress={pickFile}
                 className="bg-blue-500 p-4 rounded-lg mb-4"
@@ -220,9 +218,10 @@ export default function ImportScreen() {
 
             <View className="mt-6 p-4 bg-yellow-100 rounded-lg">
                 <Text className="font-bold text-yellow-800">注意：</Text>
-                <Text className="text-yellow-700">• 导入将覆盖现有所有数据</Text>
-                <Text className="text-yellow-700">• 请确保文件来自本应用的导出</Text>
-                <Text className="text-yellow-700">• 大文件导入可能需要较长时间</Text>
+                <Text></Text>
+                <Text className="text-yellow-700">导入将覆盖现有所有数据</Text>
+                <Text className="text-yellow-700">请确保文件来自本应用的导出</Text>
+                <Text className="text-yellow-700">大文件导入可能需要较长时间</Text>
             </View>
         </View>
     );

@@ -43,7 +43,7 @@ export default function RootLayout() {
           <Stack.Screen
               name="(modals)/settings/export"
               options={{
-                  title: '导出',
+                  title: '导出数据',
                   headerBackTitle: '返回',
                   headerBackVisible: true
               }}
@@ -51,7 +51,7 @@ export default function RootLayout() {
           <Stack.Screen
               name="(modals)/settings/import"
               options={{
-                  title: '导入',
+                  title: '从JSON文件恢复数据',
                   headerBackTitle: '返回',
                   headerBackVisible: true
               }}

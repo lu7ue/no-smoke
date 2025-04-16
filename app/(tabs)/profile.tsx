@@ -35,54 +35,54 @@ const Profile = () => {
 
     return (
         <ScrollView className="flex-1 bg-white">
-            {/* 用户信息卡片 */}
-            <View className="relative bg-white px-0 py-6">
-                {/* 编辑按钮 */}
-                <View className="absolute bottom-6 right-10">
-                    <TouchableOpacity onPress={() => router.push('/(modals)/settings/edit')}>
-                        <Image
-                            source={icons.edit}
-                            className="w-6 h-6"
-                            style={{ tintColor: '#6b7280' }}
-                        />
-                    </TouchableOpacity>
-                </View>
+            {/*/!* 用户信息卡片 *!/*/}
+            {/*<View className="relative bg-white px-0 py-6">*/}
+            {/*    /!* 编辑按钮 *!/*/}
+            {/*    <View className="absolute bottom-6 right-10">*/}
+            {/*        <TouchableOpacity onPress={() => router.push('/(modals)/settings/edit')}>*/}
+            {/*            <Image*/}
+            {/*                source={icons.edit}*/}
+            {/*                className="w-6 h-6"*/}
+            {/*                style={{ tintColor: '#6b7280' }}*/}
+            {/*            />*/}
+            {/*        </TouchableOpacity>*/}
+            {/*    </View>*/}
 
-                <View className="items-center justify-center">
-                    {/* 头像 - 显示用户上传的头像或默认头像 */}
-                    <Image
-                        source={
-                            user?.avatar && user.avatar !== ''
-                                ? { uri: user.avatar }
-                                : require('../../assets/images/defaultAvatar.png')
-                        }
-                        className="w-24 h-24 rounded-full mb-2"
-                        defaultSource={require('../../assets/images/defaultAvatar.png')} // 添加默认源
-                    />
+            {/*    <View className="items-center justify-center">*/}
+            {/*        /!* 头像 - 显示用户上传的头像或默认头像 *!/*/}
+            {/*        <Image*/}
+            {/*            source={*/}
+            {/*                user?.avatar && user.avatar !== ''*/}
+            {/*                    ? { uri: user.avatar }*/}
+            {/*                    : require('../../assets/images/defaultAvatar.png')*/}
+            {/*            }*/}
+            {/*            className="w-24 h-24 rounded-full mb-2"*/}
+            {/*            defaultSource={require('../../assets/images/defaultAvatar.png')} // 添加默认源*/}
+            {/*        />*/}
 
-                    {/* 用户名 */}
-                    <Text className="text-2xl text-gray-800">
-                        {user?.name || 'Unknown'}
-                    </Text>
-                </View>
-            </View>
+            {/*        /!* 用户名 *!/*/}
+            {/*        <Text className="text-2xl text-gray-800">*/}
+            {/*            {user?.name || 'Unknown'}*/}
+            {/*        </Text>*/}
+            {/*    </View>*/}
+            {/*</View>*/}
 
-            {/* 分割线 */}
-            <View className="bg-white">
-                <View
-                    style={{
-                        height: 1.5,
-                        backgroundColor: '#d1d5db',
-                        marginHorizontal: 20,
-                        marginBottom: 20,
-                    }}
-                />
-            </View>
+            {/*/!* 分割线 *!/*/}
+            {/*<View className="bg-white">*/}
+            {/*    <View*/}
+            {/*        style={{*/}
+            {/*            height: 1.5,*/}
+            {/*            backgroundColor: '#d1d5db',*/}
+            {/*            marginHorizontal: 20,*/}
+            {/*            marginBottom: 20,*/}
+            {/*        }}*/}
+            {/*    />*/}
+            {/*</View>*/}
 
             {/* 设置戒烟时间 行 */}
             <TouchableOpacity
                 onPress={() => router.push('/(modals)/settings/date')}
-                className="flex-row justify-between items-center bg-white p-2 mb-4 ml-4 mr-4"
+                className="flex-row justify-between items-center bg-white p-2 mb-4 ml-4 mr-4 mt-6"
             >
                 <Text
                     className="text-gray-700 text-2xl"

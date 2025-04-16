@@ -62,7 +62,7 @@ export default function ExportScreen() {
                 className={`p-4 rounded-lg ${isLoading ? 'bg-gray-400' : 'bg-blue-500'}`}
             >
                 <Text className="text-white text-center">
-                    {isLoading ? '正在导出...' : '导出数据为JSON文件'}
+                    {isLoading ? '正在导出...' : '一键导出'}
                 </Text>
             </TouchableOpacity>
         </View>
